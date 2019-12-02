@@ -49,6 +49,196 @@ JUnit5 환경에서 JUnit3와 JUnit4 실행을 지원하기 위함
 2. 테스트 실행 전
 3. 테스트 도중 그리고 테스트 실행 후
 
+### @BeforeAll & @BeforeEach
+```java
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class JUnit5Test {
+    @BeforeAll
+    static void setup() {
+        System.out.println("Before All");
+    }
+
+    @BeforeEach
+    void init() {
+        System.out.println("Before Each");
+    }
+
+    @Test
+    void test1() {
+        System.out.println("Test1");
+    }
+
+    @Test
+    void test2() {
+        System.out.println("Test2");
+    }
+
+    @Test
+    void test3() {
+        System.out.println("Test3");
+    }
+}
+```
+#### 실행 결과
+![](.images/60a09d5f.png)
+
+### @AfterEach, @AfterAll
+```java
+import org.junit.jupiter.api.*;
+
+class JUnit5Test {
+    ...
+    @AfterAll
+    static void afterAll() {
+        System.out.println("After All");
+    }
+
+    @AfterEach
+    void afterEach() {
+        System.out.println("After Each");
+    }
+}
+```
+#### 실행결과
+![](.images/4890125e.png)
+
+### @Displayname, @Disabled
+```java
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class DisplayNameAndDisabled {
+    @DisplayName("Single test successful")
+    @Test
+    void testSingleSuccessTest() {
+        System.out.println("Test success");
+    }
+
+    @Disabled("Not implemented yet")
+    @Test
+    void testShowSomething() {
+    }
+}
+```
+#### 실행결과
+![](.images/a55ba6ea.png)
+
+
+### Assertions
+```java
+
+import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class Assertion {
+    @Test
+    void lambdaExp() {
+        assertTrue(Stream.of(1, 2, 3)
+                .mapToInt(i -> i)
+                .sum() > 5, "Sum should be greater than 5");
+    }
+
+    @Test
+    void groupAssertions() {
+        int[] numbers = {0, 1, 2, 3, 4};
+        assertAll("numbers",
+                () -> assertEquals(numbers[0], 1),
+                () -> assertEquals(numbers[3], 3),
+                () -> assertEquals(numbers[4], 1)
+        );
+    }
+}
+```
+![](.images/3f8a7aec.png)
+
+### Assumptions
+Assumptions는 특정 조건을 만족할 때만 테스트를 실행시킨다. 예를 들어 trueAssumption()에서 assertEquals(5+2, 6) 으로 변경했을 때는 test fail이 뜨지만, assumeTrue(5 < 1);을 사용할경우 아래 테스트를 스킵하게 된다.
+```java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.*;
+
+public class Assumption {
+    @Test
+    void trueAssumption() {
+        assumeTrue(5 > 1);
+        assertEquals(5 + 2, 7);
+    }
+
+    @Test
+    void falseAssumption() {
+        assumeFalse(5 < 1);
+        assertEquals(5 + 2, 7);
+    }
+
+    @Test
+    void assumptionThat() {
+        String someString = "Just a string";
+        assumingThat(
+                someString.equals("Just a string"),
+                () -> assertEquals(2 + 2, 4)
+        );
+    }
+}
+```
+
+### ExceptionTest
+```java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public class ExceptionTest {
+    @Test
+    void shouldThrowException() {
+        Throwable exception = assertThrows(UnsupportedOperationException.class, () -> {
+            throw new UnsupportedOperationException("Not supported");
+        });
+        assertEquals(exception.getMessage(), "Not supported");
+    }
+
+    @Test
+    void assertThrowsException() {
+        String str = null;
+        assertThrows(IllegalArgumentException.class, () -> {
+            Integer.valueOf(str);
+        });
+    }
+}
+```
+이전에 사용하던 @Test(expected = SomeException.class) 는 지원하지 않는다.
+
+### Test Suites
+JUnit5의 새 기능중 하나로, 하나의 test suite에 여러 테스트 클래스를 모아 한번에 실행하는 기능을 제공한다.
+@SelectPackage 와 @SelectClasses를 제공함
+
+![](.images/8e475115.png)
+![](.images/86f3518e.png)
+
+
+### Dynamic Tests
+run-time 시에 생성된 테스트 케이스를 선언하고 실행할수 있 기능
+static test와는 다르게 런타임 시에 다이나믹하 테스트 케이스를 정의할 수 있다.
+다이나믹 테스트는 @TestFacory 어노테이션을 사용해 만들어질 수 있다.
+
+```java
+@TestFactory
+public Stream<DynamicTest> translateDynamicTestsFromStream() {
+    return in.stream()
+      .map(word ->
+          DynamicTest.dynamicTest("Test translate " + word, () -> {
+            int id = in.indexOf(word);
+            assertEquals(out.get(id), translate(word));
+          })
+    );
+}
+```
+
 
 ## reference
 - [A Guide to JUnit 5](https://www.baeldung.com/junit-5)
