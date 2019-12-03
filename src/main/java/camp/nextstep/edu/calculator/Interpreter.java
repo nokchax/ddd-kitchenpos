@@ -9,10 +9,10 @@ public class Interpreter {
 
     private Numbers numbers;
 
-    static Interpreter of(String input) {
+    static Interpreter interpret(String input) {
         Interpreter interpreter = new Interpreter();
 
-        interpreter.numbers = new Numbers(interpret(input));
+        interpreter.numbers = new Numbers(interpretInput(input));
 
         return interpreter;
     }
@@ -23,7 +23,7 @@ public class Interpreter {
                 .sum();
     }
 
-    private static String[] interpret(String input) {
+    private static String[] interpretInput(String input) {
         Matcher matcher = PATTERN.matcher(input);
         String splitter = DEFAULT_SPLITTER;
 

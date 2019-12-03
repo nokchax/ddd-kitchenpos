@@ -8,7 +8,7 @@ public class Calculator {
         if(isEmpty(input))
             return 0;
 
-        return Interpreter.of(input)
+        return Interpreter.interpret(input)
                 .calculate();
     }
 

@@ -12,7 +12,7 @@ class InterpreterTest {
     @ParameterizedTest
     @MethodSource
     void addWithCommaAndSemicolon(String input, int answer) {
-        assertThat(Interpreter.of(input).calculate()).isSameAs(answer);
+        assertThat(Interpreter.interpret(input).calculate()).isSameAs(answer);
     }
 
     private static Stream addWithCommaAndSemicolon() {
