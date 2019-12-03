@@ -26,5 +26,18 @@ class CalculatorTest {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("addWithCustomSplitter")
+    void addWithCustomSplitter(String input, int answer) {
+        Calculator calculator = new Calculator();
+        assertThat(calculator.add(input)).isSameAs(answer);
+    }
+
+    private static Stream addWithCustomSplitter() {
+        return Stream.of(
+                Arguments.of("//a\n1a2", 3),
+                Arguments.of("//!\n1!2!3", 6)
+        );
+    }
 
 }
