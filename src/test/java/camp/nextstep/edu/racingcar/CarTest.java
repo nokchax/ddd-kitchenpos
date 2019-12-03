@@ -56,7 +56,7 @@ public class CarTest {
     }
 
     private static class StaticNumMovingStrategy implements MovingStrategy {
-        private int staticNum;
+        private int staticNum; // static means fixed
 
         StaticNumMovingStrategy(int staticNum) {
             this.staticNum = staticNum;
