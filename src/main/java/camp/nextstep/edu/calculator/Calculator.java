@@ -4,7 +4,7 @@ import org.springframework.util.StringUtils;
 
 public class Calculator {
 
-    int add(String input) throws RuntimeException {
+    int add(String input) {
         if(isEmpty(input))
             return 0;
 

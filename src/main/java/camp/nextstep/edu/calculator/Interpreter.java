@@ -17,7 +17,8 @@ public class Interpreter {
         return interpreter;
     }
 
-    int calculate() throws RuntimeException {
+    // remove throws runtime exception... is this good code?
+    int calculate() {
         return this.numbers
                 .sum();
     }

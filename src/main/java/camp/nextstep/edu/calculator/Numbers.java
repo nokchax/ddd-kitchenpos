@@ -15,7 +15,7 @@ public class Numbers {
                 .collect(Collectors.toList());
     }
     
-    private int parseInt(String number) throws RuntimeException {
+    private int parseInt(String number) {
         int parsedInt = Integer.parseInt(number);
         
         if(parsedInt < 0)
