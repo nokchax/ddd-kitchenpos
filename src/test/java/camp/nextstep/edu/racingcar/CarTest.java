@@ -31,40 +31,39 @@ public class CarTest {
     }
 
     @ParameterizedTest
-    @DisplayName("자동차 이름은 4글자는 가능")
+    @DisplayName("자동차 이름은 4글자 가능")
     @ValueSource(strings = {"네글자는", "다섯글자는"})
     void carNameTest(final String carName) {
         assertDoesNotThrow(() -> new Car(carName));
     }
 
     @ParameterizedTest
-    @DisplayName("4이상인 경우 움직여라!")
+    @DisplayName("4이상인 경우에만 움직일 수 있다.")
     @MethodSource
-    void carMoveTest(StaticNumMovingStrategy movingStrategy, int position) {
+    void carMoveTest(MovingStrategy movingStrategy, int position) {
         Car car = new Car("Test");
         car.move(movingStrategy);
         assertTrue(car.isInPosition(position));
     }
 
-
     private static Stream carMoveTest() {
         return Stream.of(
-                Arguments.of(new StaticNumMovingStrategy(3), 0),
-                Arguments.of(new StaticNumMovingStrategy(4), 1),
-                Arguments.of(new StaticNumMovingStrategy(5), 1)
+                Arguments.of(new FixedNumberMovingStrategy(3), 0),
+                Arguments.of(new FixedNumberMovingStrategy(4), 1),
+                Arguments.of(new FixedNumberMovingStrategy(5), 1)
         );
     }
 
-    private static class StaticNumMovingStrategy implements MovingStrategy {
-        private int staticNum; // static means fixed
+    private static class FixedNumberMovingStrategy implements MovingStrategy {
+        private int fixedNumber; // static means fixed
 
-        StaticNumMovingStrategy(int staticNum) {
-            this.staticNum = staticNum;
+        FixedNumberMovingStrategy(int fixedNumber) {
+            this.fixedNumber = fixedNumber;
         }
 
         @Override
         public boolean movable() {
-            return staticNum >= 4;
+            return fixedNumber >= 4;
         }
     }
 }
