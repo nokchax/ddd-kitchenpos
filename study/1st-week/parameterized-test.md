@@ -311,7 +311,7 @@ public class CustomArgumentTest {
 }
 ```
 
-### Cumstom Annotation
+### Custom Annotation
 skip... [참고](https://www.baeldung.com/parameterized-tests-junit-5#8-custom-annotation)
 
 ## Argument Conversion
@@ -468,7 +468,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import java.time.Month;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CumtomizingDisplayNameTest {
+public class CustomizingDisplayNameTest {
     @ParameterizedTest(name = "{index} {0} is 30 days long")
     @EnumSource(value = Month.class, names = {"APRIL", "JUNE", "SEPTEMBER", "NOVEMBER"})
     void someMonths_Are30DaysLong(Month month) {
