@@ -1,6 +1,6 @@
 # Parameterized Tests
 ## Overview
-parameterzied tests는 Junit5에서 새롭게 제공하는 기능중 하나로, 하나의 테스트 메소드로 서로 다른 파라미터를 넘겨 여러번 테스트 가능하게 해줍니다.
+parameterized tests는 Junit5에서 새롭게 제공하는 기능중 하나로, 하나의 테스트 메소드로 서로 다른 파라미터를 넘겨 여러번 테스트 가능하게 해줍니다.
 
 ## Dependencies
 ```xml
@@ -26,11 +26,9 @@ public class Numbers {
 ```java
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class NumbersTest {
-
     @ParameterizedTest
     @ValueSource(ints = {1, 3, 5, -3, 13, 2, Integer.MAX_VALUE})
     void isOdd_ShouldReturnTrueForOddNumbers(int number) {
@@ -202,7 +200,6 @@ public class CsvTest {
 ```java
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CsvFileTest {
@@ -485,3 +482,5 @@ display name 도 커스터 마이징 할수 있다.
 - {arguments} - is a placeholder for the complete, comma-separated list of arguments ?
 - {0}, {1}, ... - 각 인자들로 치환됨
 
+## reference
+- [Guide to JUnit 5 Parameterized Tests](https://www.baeldung.com/parameterized-tests-junit-5)
