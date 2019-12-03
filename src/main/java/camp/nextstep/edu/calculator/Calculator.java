@@ -8,23 +8,8 @@ public class Calculator {
         if(isEmpty(input))
             return 0;
 
-        String[] nums = input.split("([,:])");
-
-        int answer = 0;
-        for(String num : nums) {
-            try {
-                int parsedNum = Integer.parseInt(num);
-
-                if(parsedNum < 0)
-                    throw new RuntimeException();
-
-                answer += parsedNum;
-            } catch (NumberFormatException e) {
-                throw new RuntimeException();
-            }
-        }
-
-        return answer;
+        return Interpreter.of(input)
+                .calculate();
     }
 
     private boolean isEmpty(String input) {
