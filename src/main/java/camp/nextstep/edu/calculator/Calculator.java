@@ -1,9 +1,11 @@
 package camp.nextstep.edu.calculator;
 
+import org.springframework.util.StringUtils;
+
 public class Calculator {
 
     int add(String input) throws RuntimeException {
-        if(input == null || input.isEmpty())
+        if(isEmpty(input))
             return 0;
 
         String[] nums = input.split("([,:])");
@@ -23,5 +25,9 @@ public class Calculator {
         }
 
         return answer;
+    }
+
+    private boolean isEmpty(String input) {
+        return StringUtils.isEmpty(input);
     }
 }

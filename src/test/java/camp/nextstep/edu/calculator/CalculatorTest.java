@@ -18,6 +18,7 @@ class CalculatorTest {
 
     private static Stream addWithCommaAndSemicolonParams() {
         return Stream.of(
+                Arguments.of(null, 0),
                 Arguments.of("", 0),
                 Arguments.of("1,2", 3),
                 Arguments.of("1,2,3", 6),
