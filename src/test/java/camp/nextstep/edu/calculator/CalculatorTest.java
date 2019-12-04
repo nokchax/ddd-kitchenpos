@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 
 /**
@@ -47,5 +47,17 @@ class CalculatorTest {
         assertThat(calculator.customAdd(line))
                 .as("커스텀 구분자가 있는 문자열을 받고 분리하여 6 을 리턴한다.")
                 .isEqualTo(6);
+    }
+
+    @ParameterizedTest
+    @DisplayName("숫자 이외의 값 또는 음수를 전달하여 RuntimeException 예외를 throw 한다.")
+    @ValueSource(strings = {"sss", "-1", "-10", "-100"})
+    void _throwRuntimeExceptionTest(String line) {
+
+        Calculator calculator = new Calculator();
+
+        assertThatThrownBy(() -> {
+            calculator.basicAdd(line);
+        }).isInstanceOf(RuntimeException.class);
     }
 }

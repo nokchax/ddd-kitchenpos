@@ -15,6 +15,13 @@ public class Calculator {
     private final Pattern SEPARATOR_PATTERN = compile("([:,])");
     private final Pattern EXTRACT_SEPARATOR_PATTERN = compile("//(.)\\n(.*)");
 
+    private void validateNumber(String paramNumber) {
+
+        if(!NUMBER_PATTERN.matcher(paramNumber).find() || Integer.parseInt(paramNumber) < 0){
+            throw new RuntimeException(String.format("\"%d\" 값이 들어왔기 때문에 덧셈을 수행하지 못합니다.", paramNumber));
+        }
+    }
+
     private boolean isZero(String line) {
 
         return (line.isEmpty()
@@ -30,9 +37,8 @@ public class Calculator {
         }
 
         String customDelimiter = matcher.group(1);
-        String[] tokens = matcher.group(2).split(customDelimiter);
 
-        return tokens;
+        return matcher.group(2).split(customDelimiter);
     }
 
     int basicAdd(String line) {
@@ -52,6 +58,7 @@ public class Calculator {
                 continue;
             }
 
+            validateNumber(c + "");
             sum += Integer.parseInt("" + c);
         }
 
@@ -64,11 +71,15 @@ public class Calculator {
             return 0;
         }
 
-        String[]tokens = getCustomPatternArray(line);
         int sum = 0;
+        String[]tokens = getCustomPatternArray(line);
 
-        for(int i = 0; i < tokens.length; i++) {
-            sum += basicAdd(tokens[i]);
+        if(tokens == null) {
+            return sum;
+        }
+
+        for (String token : tokens) {
+            sum += basicAdd(token);
         }
 
         return sum;
