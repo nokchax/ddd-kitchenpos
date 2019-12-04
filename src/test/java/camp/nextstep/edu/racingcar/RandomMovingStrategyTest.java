@@ -22,10 +22,11 @@ class RandomMovingStrategyTest {
 
     @DisplayName("0에서 9 사이의 무작위 값을 구한 후, 무작위 값이 4 이상인 경우 true 아니면 false를 리턴")
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    @ValueSource(ints = {3, 4, 5, 9})
     public void testCondition(int randomNumber) {
         //given
-        given(random.nextInt(anyInt())).willReturn(randomNumber);
+        given(random.nextInt(anyInt()))
+                .willReturn(randomNumber);
 
         //when
         MovingStrategy movingStrategy = new RandomMovingStrategy(random);
