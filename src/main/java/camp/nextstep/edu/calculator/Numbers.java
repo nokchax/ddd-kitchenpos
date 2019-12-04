@@ -10,13 +10,12 @@ public class Numbers {
     //boxed() -> primitive type을 reference type으로 박싱해서 stream을 생성함.
     Numbers(String[] numbers) {
         this.numbers = Arrays.stream(numbers)
-                .mapToInt(this::parseInt)
-                .boxed()
+                .map(this::parseInt)
                 .collect(Collectors.toList());
     }
     
-    private int parseInt(String number) {
-        int parsedInt = Integer.parseInt(number);
+    private Integer parseInt(String number) {
+        Integer parsedInt = Integer.parseInt(number);
         
         if(parsedInt < 0)
             throw new RuntimeException();
