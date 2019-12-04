@@ -37,6 +37,13 @@ public class StringCalculatorTests {
         assertThrows(RuntimeException.class, () -> StringCalculator.calculate(text));
     }
 
+    @DisplayName("문자열 계산기, 계산(NaN)")
+    @ParameterizedTest
+    @ValueSource(strings = {"A", "나", "-"})
+    public void testCalculateWithOneNan(String text) {
+        assertThrows(RuntimeException.class, () -> StringCalculator.calculate(text));
+    }
+
     @DisplayName("문자열 계산기, 계산(콤마패턴)")
     @ParameterizedTest
     @ValueSource(strings = {"1,3", "2,2", "3,1"})
@@ -48,6 +55,13 @@ public class StringCalculatorTests {
     @ParameterizedTest
     @ValueSource(strings = {"-1,3", "-2,2", "-3,1"})
     public void testCalculateWithCommaPattenAndNegative(String text) {
+        assertThrows(RuntimeException.class, () -> StringCalculator.calculate(text));
+    }
+
+    @DisplayName("문자열 계산기, 계산(콤마패턴(NAN))")
+    @ParameterizedTest
+    @ValueSource(strings = {"가,3", "-,2", "A,3"})
+    public void testCalculateWithCommaPattenAndNaN(String text) {
         assertThrows(RuntimeException.class, () -> StringCalculator.calculate(text));
     }
 
