@@ -1,6 +1,9 @@
 package camp.nextstep.edu.calculator;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.util.regex.Pattern.compile;
 
 /**
  * Created by pasudo123 on 2019-12-04
@@ -8,17 +11,31 @@ import java.util.regex.Pattern;
  **/
 public class Calculator {
 
-    final Pattern NUMBER_PATTERN = Pattern.compile("([0-9]*)");
-    final Pattern SEPARATOR_PATTERN = Pattern.compile("(:|,)");
+    private final Pattern NUMBER_PATTERN = compile("([0-9]*)");
+    private final Pattern SEPARATOR_PATTERN = compile("([:,])");
+    private final Pattern EXTRACT_SEPARATOR_PATTERN = compile("//(.)\\n(.*)");
 
     private boolean isZero(String line) {
 
         return (line.isEmpty()
                 || !NUMBER_PATTERN.matcher(line).find());
-
     }
 
-    int add(String line) {
+    private String[] getCustomPatternArray(String line){
+
+        Matcher matcher = EXTRACT_SEPARATOR_PATTERN.matcher(line);
+
+        if(!matcher.find()) {
+            return null;
+        }
+
+        String customDelimiter = matcher.group(1);
+        String[] tokens = matcher.group(2).split(customDelimiter);
+
+        return tokens;
+    }
+
+    int basicAdd(String line) {
 
         if(isZero(line)) {
             return 0;
@@ -36,6 +53,22 @@ public class Calculator {
             }
 
             sum += Integer.parseInt("" + c);
+        }
+
+        return sum;
+    }
+
+    int customAdd(String line) {
+
+        if(isZero(line)) {
+            return 0;
+        }
+
+        String[]tokens = getCustomPatternArray(line);
+        int sum = 0;
+
+        for(int i = 0; i < tokens.length; i++) {
+            sum += basicAdd(tokens[i]);
         }
 
         return sum;

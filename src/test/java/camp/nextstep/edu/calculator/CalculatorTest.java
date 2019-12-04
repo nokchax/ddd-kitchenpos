@@ -3,8 +3,6 @@ package camp.nextstep.edu.calculator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +20,7 @@ class CalculatorTest {
 
         Calculator calculator = new Calculator();
 
-        assertThat(calculator.add(line))
+        assertThat(calculator.basicAdd(line))
                 .as("길이가 0 이상이며 숫자를 포함한 문자열을 입력받고 6 을 리턴한다.")
                 .isEqualTo(6);
     }
@@ -34,8 +32,20 @@ class CalculatorTest {
 
         Calculator calculator = new Calculator();
 
-        assertThat(calculator.add(line))
+        assertThat(calculator.basicAdd(line))
                 .as("길이가 0 이며 숫자를 포함하지 않는 문자열을 입력받고 0 을 리턴한다.")
                 .isEqualTo(0);
+    }
+
+    @ParameterizedTest
+    @DisplayName("커스텀 구분자를 지정하여 덧셈을 수행한다.")
+    @ValueSource(strings = {"//;\n1,2;3", "//@\n1@2,3", "//=\n1=2=3", "//&\n1&2:3"})
+    void _customAddTest(String line) {
+
+        Calculator calculator = new Calculator();
+
+        assertThat(calculator.customAdd(line))
+                .as("커스텀 구분자가 있는 문자열을 받고 분리하여 6 을 리턴한다.")
+                .isEqualTo(6);
     }
 }
