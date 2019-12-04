@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class RandomMovingStrategy implements MovingStrategy {
     private Random random;
+
     public RandomMovingStrategy(Random random) {
         this.random = random;
     }
