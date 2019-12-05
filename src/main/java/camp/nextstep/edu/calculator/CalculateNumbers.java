@@ -9,9 +9,8 @@ import static java.util.stream.Collectors.toList;
 public class CalculateNumbers {
     private List<Integer> calculateNumbers = new ArrayList<>();
 
-    public CalculateNumbers(String[] strings) {
-        addAll(strings);
-        validateNumberValue();
+    public CalculateNumbers(final String[] strings) {
+        addAll(convertStringArrayToNumberList(strings));
     }
 
     public int sum() {
@@ -20,26 +19,25 @@ public class CalculateNumbers {
                 .sum();
     }
 
-    private void validateNumberValue() {
-        final boolean containsNegativeValue = calculateNumbers.stream()
-                .anyMatch(number -> number < 0);
-        if (containsNegativeValue) {
+    private void addAll(final List<Integer> numberStrings) {
+        calculateNumbers.addAll(numberStrings);
+    }
+
+    private List<Integer> convertStringArrayToNumberList(final String[] numberStrings) {
+        return Arrays.stream(numberStrings)
+                .map(this::parseInt)
+                .collect(toList());
+    }
+
+    private Integer parseInt(final String string) {
+        final int num = Integer.parseInt(string);
+        validateNumberValue(num);
+        return num;
+    }
+
+    private void validateNumberValue(final int num) {
+        if (num < 0) {
             throw new RuntimeException("음수값이 들어왔습니다.");
         }
     }
-
-    private void addAll(String[] numberStrings) {
-        calculateNumbers.addAll(convertStringArrayToNumberList(numberStrings));
-    }
-
-    private List<Integer> convertStringArrayToNumberList(String[] numberStrings) {
-        try {
-            return Arrays.stream(numberStrings)
-                    .map(Integer::parseInt)
-                    .collect(toList());
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
