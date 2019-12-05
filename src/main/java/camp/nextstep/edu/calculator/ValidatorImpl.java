@@ -3,7 +3,7 @@ package camp.nextstep.edu.calculator;
 public class ValidatorImpl implements Validator{
 
     @Override
-    public int positiveOrElseThrow(String line) {
+    public int positiveOrElseThrow(final String line) {
 
         if(line.isEmpty()) {
             return 0;
@@ -30,7 +30,7 @@ public class ValidatorImpl implements Validator{
         return number;
     }
 
-    private void executeRuntimeException(String line){
+    private void executeRuntimeException(final String line){
         throw new RuntimeException(String.format("\"%d\" 값이 들어왔기 때문에 덧셈을 수행하지 못합니다.", line));
     }
 }

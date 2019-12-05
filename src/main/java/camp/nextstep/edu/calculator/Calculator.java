@@ -16,7 +16,7 @@ public class Calculator {
         this.delimiter = new DelimiterImpl();
     }
 
-    int add(String line) {
+    int add(final String line) {
 
         int sum = 0;
 

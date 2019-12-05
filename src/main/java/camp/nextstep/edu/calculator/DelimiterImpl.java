@@ -16,7 +16,7 @@ public class DelimiterImpl implements Delimiter {
     private static final String SEPARATOR_REGEX = "[:,]";
 
     @Override
-    public List<String> splitStringReturnList(String line) {
+    public List<String> splitStringReturnList(final String line) {
 
         List<String> tokenList = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class DelimiterImpl implements Delimiter {
         return tokenList;
     }
 
-    private String[] useCustomSplitReturnArray(String line) {
+    private String[] useCustomSplitReturnArray(final String line) {
 
         Matcher matcher = EXTRACT_SEPARATOR_PATTERN.matcher(line);
 
@@ -43,7 +43,7 @@ public class DelimiterImpl implements Delimiter {
                 .split(customDelimiter);
     }
 
-    private String[] useBasicSplitReturnArray(String line) {
+    private String[] useBasicSplitReturnArray(final String line) {
         return line.split(SEPARATOR_REGEX);
     }
 }
