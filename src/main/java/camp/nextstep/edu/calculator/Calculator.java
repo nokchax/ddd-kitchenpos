@@ -23,7 +23,7 @@ public class Calculator {
         List<String>tokens = delimiter.splitStringReturnList(line);
 
         for(String token : tokens) {
-            sum += validator.positiveOrElseThrow(token);
+            sum += validator.possibleCalculateOrElseThrow(token);
         }
 
         return sum;

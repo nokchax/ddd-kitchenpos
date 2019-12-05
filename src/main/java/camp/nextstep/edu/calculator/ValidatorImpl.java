@@ -3,32 +3,36 @@ package camp.nextstep.edu.calculator;
 public class ValidatorImpl implements Validator{
 
     @Override
-    public int positiveOrElseThrow(final String line) {
+    public int possibleCalculateOrElseThrow(final String line) {
 
         if(line.isEmpty()) {
             return 0;
         }
 
-        int number = 0;
+        this.numberOrElseThrow(line);
+        this.positiveOrElseThrow(line);
 
-        try {
-
-            number = Integer.parseInt(line);
-
-        } catch (Exception e) {
-
-            // 숫자 이외의 값.
-            this.executeRuntimeException(line);
-        }
-
-        if(number < 0) {
-
-            // 음수
-            this.executeRuntimeException(line);
-        }
-
-        return number;
+        return Integer.parseInt(line);
     }
+
+    private void numberOrElseThrow(final String line){
+
+        // 숫자가 아닌 경우
+        try {
+            Integer.parseInt(line);
+        } catch (Exception e) {
+            this.executeRuntimeException(line);
+        }
+    }
+
+    private void positiveOrElseThrow(final String line) {
+
+        // 음수인 경우
+        if(Integer.parseInt(line) < 0) {
+            this.executeRuntimeException(line);
+        }
+    }
+
 
     private void executeRuntimeException(final String line){
         throw new RuntimeException(String.format("\"%d\" 값이 들어왔기 때문에 덧셈을 수행하지 못합니다.", line));
