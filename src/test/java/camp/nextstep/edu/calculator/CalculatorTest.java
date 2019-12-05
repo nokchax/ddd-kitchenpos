@@ -16,12 +16,10 @@ class CalculatorTest {
 
     private Calculator calculator;
 
-
     @BeforeEach
     void init() {
         this.calculator = new Calculator();
     }
-
 
     @ParameterizedTest
     @DisplayName("쉼표와 콜론 구분자를 기준으로 분리한 각 숫자의 합을 계산한다.")
@@ -33,7 +31,6 @@ class CalculatorTest {
                 .isEqualTo(6);
     }
 
-
     @ParameterizedTest
     @DisplayName("공백 및 구분자로 구성된 문자열의 합을 계산한다.")
     @ValueSource(strings = {"", ",,,", ",", ":,", ",,,"})
@@ -44,7 +41,6 @@ class CalculatorTest {
                 .isEqualTo(0);
     }
 
-
     @ParameterizedTest
     @DisplayName("커스텀 구분자를 지정하여 덧셈을 수행한다.")
     @ValueSource(strings = {"//;\n1,2;3", "//@\n1@2,3", "//=\n1=2=3", "//&\n1&2:3"})
@@ -54,7 +50,6 @@ class CalculatorTest {
                 .as("커스텀 구분자가 있는 문자열을 받고 분리하여 6 을 리턴한다.")
                 .isEqualTo(6);
     }
-
 
     @ParameterizedTest
     @DisplayName("숫자 이외의 값 또는 음수를 전달하여 RuntimeException 예외를 throw 한다.")
