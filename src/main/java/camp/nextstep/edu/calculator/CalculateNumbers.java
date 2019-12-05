@@ -10,7 +10,7 @@ public class CalculateNumbers {
     private List<Integer> calculateNumbers = new ArrayList<>();
 
     public CalculateNumbers(final String[] strings) {
-        addAll(convertStringArrayToNumberList(strings));
+        parseIntAndAddAll(convertStringArrayToNumberList(strings));
     }
 
     public int sum() {
@@ -19,7 +19,7 @@ public class CalculateNumbers {
                 .sum();
     }
 
-    private void addAll(final List<Integer> numberStrings) {
+    private void parseIntAndAddAll(final List<Integer> numberStrings) {
         calculateNumbers.addAll(numberStrings);
     }
 
