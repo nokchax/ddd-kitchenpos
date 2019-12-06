@@ -3,9 +3,7 @@ package camp.nextstep.edu.racingcar;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,10 +49,11 @@ class CarTest {
     }
 
     @DisplayName("자동차 이름이 널이면 익셉션이 발생한다.")
-    @Test
-    public void 자동차_이름_널_익셉션발생(){
+    @ParameterizedTest
+    @NullSource
+    public void 자동차_이름_널_익셉션발생(final String name){
         //given
-            final String name = null;
+            log.info("name : {}",name);
 
         //when
             assertThatThrownBy(()->{
