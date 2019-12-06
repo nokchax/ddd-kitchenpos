@@ -30,7 +30,28 @@ class CarTest {
         //then
             assertThat(name.length()).isLessThanOrEqualTo(5);
             assertThat(car).isNotNull();
-            assertThat(car.isInPosition(0)).isTrue();
+    }
+
+    private static Stream<Arguments> carArguments(){
+        return Stream.of(
+                Arguments.of("b",1),
+                Arguments.of("c",0),
+                Arguments.of("g",7),
+                Arguments.of("q",10)
+        );
+    }
+    @DisplayName("자동차 위치가 정상적으로 생성된다.")
+    @ParameterizedTest
+    @MethodSource("carArguments")
+    public void 자동차_위치_정상생성(final String name,final int position){
+        //given
+        log.info("자동차 이름 {} , 위치 {}",name,position);
+
+        //when
+        Car car = new Car(name,position);
+
+        //then
+        assertThat(car.isInPosition(position)).isTrue();
     }
 
     @DisplayName("자동차 이름이 5글자가 넘는 경우 익셉션이 발생한다.")
