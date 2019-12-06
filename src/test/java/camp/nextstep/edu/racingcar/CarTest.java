@@ -65,29 +65,24 @@ class CarTest {
 
     private static Stream<Arguments> moveArguments(){
         return Stream.of(
-                Arguments.of(true),
-                Arguments.of(false)
+                Arguments.of(true,1),
+                Arguments.of(false,0)
         );
     }
 
     @DisplayName("자동차는 이동전략에 따라 움직이거나 움직이지 않는다.")
     @ParameterizedTest
     @MethodSource("moveArguments")
-    public void 자동차_이동(boolean isMove){
-    //given
+    public void 자동차_이동(boolean isMove,int expected){
+        //given
         String name = "name";
-        int originPosition = 1;
-        Car car = new Car(name,originPosition);
+        Car car = new Car(name);
 
-    //when
+        //when
         car.move(()->isMove);
 
-    //then
-        if(isMove){
-            assertThat(car.isInPosition(++originPosition)).isTrue();
-            return;
-        }
-        assertThat(car.isInPosition(originPosition)).isTrue();
+        //then
+        assertThat(car.isInPosition(expected)).isTrue();
 
     }
 }
