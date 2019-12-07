@@ -29,6 +29,7 @@ public class PositiveNumberGroup {
     }
 
     public int sumAll() {
-        return positiveNumbers.stream().reduce(0, Integer::sum);
+        return positiveNumbers.stream()
+                .reduce(0, Integer::sum);
     }
 }

@@ -2,24 +2,17 @@ package camp.nextstep.edu.calculator;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StringCalculatorTests {
 
-    @DisplayName("문자열 계산기, 계산(NULL)")
+    @DisplayName("문자열 계산기, 계산(NULL And Empty)")
     @ParameterizedTest
-    @NullSource
+    @NullAndEmptySource
     public void testCalculateWithNull(String text) {
-        assertEquals(0, StringCalculator.calculate(text));
-    }
-
-    @DisplayName("문자열 계산기, 계산(Empty)")
-    @ParameterizedTest
-    @ValueSource(strings = {""})
-    public void testCalculateWithEmpty(String text) {
         assertEquals(0, StringCalculator.calculate(text));
     }
 
