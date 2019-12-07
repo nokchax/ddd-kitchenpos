@@ -5,8 +5,9 @@ import org.springframework.util.StringUtils;
 public class Calculator {
 
     int add(String input) {
-        if(isEmpty(input))
+        if(isEmpty(input)) {
             return 0;
+        }
 
         return new Numbers(Interpreter.interpret(input))
                 .sum();

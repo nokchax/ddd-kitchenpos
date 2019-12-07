@@ -16,8 +16,9 @@ public class Numbers {
     private Integer parseStringNumber(String stringNumber) {
         Integer parsedInt = Integer.parseInt(stringNumber);
         
-        if(parsedInt < 0)
+        if(parsedInt < 0) {
             throw new RuntimeException();
+        }
         
         return parsedInt;
     }
