@@ -2,21 +2,31 @@ package camp.nextstep.edu.racingcar;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import java.util.Random;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class RacingCarTests {
 
+    @Mock
+    private Random random;
+
     @DisplayName("자동차 이름 (5글자 이내) 테스트")
     @ParameterizedTest
-    @ValueSource(strings = { "blue", "red", "green" })
+    @ValueSource(strings = {"blue", "red", "green"})
     void carNormalNameTest(String input) {
         assertThat(new Car(input));
     }
@@ -46,27 +56,39 @@ public class RacingCarTests {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"true", "false"})
     @DisplayName("자동차 움직임 테스트")
-    // @Disabled("Not implemented yet")
-    void carMovingTest() {
+    void carMovingTest(boolean result) {
         MovingStrategy mockMovingStrategy = mock(MovingStrategy.class);
-        when(mockMovingStrategy.movable()).thenReturn(true);
+        when(mockMovingStrategy.movable()).thenReturn(result);
 
-        Car car = new Car("test", 0);
+        Car car = new Car("test");
         car.move(mockMovingStrategy);
-        assertTrue(car.isInPosition(1));
+        assertTrue(car.isInPosition(expectedPosition(result)));
     }
 
-    @Test
-    @DisplayName("자동차 정지 테스트")
-    // @Disabled("Not implemented yet")
-    void carNotMovingTest() {
-        MovingStrategy mockMovingStrategy = mock(MovingStrategy.class);
-        when(mockMovingStrategy.movable()).thenReturn(false);
+    @DisplayName("무작위 값이 4 이상이면 움직이고, 작으면 움직이지 않는다.")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    @ExtendWith(MockitoExtension.class)
+    void carRandomMovingTest(Integer randomNumber) {
+        given(random.nextInt(anyInt()))
+                .willReturn(randomNumber);
 
-        Car car = new Car("test", 0);
-        car.move(mockMovingStrategy);
-        assertFalse(car.isInPosition(1));
+        MovingStrategy movingStrategy = new RandomMovingStrategy(random);
+        Car car = new Car("test");
+        car.move(movingStrategy);
+        assertThat(car.isInPosition(expectedPosition(randomNumber)));
     }
+
+    private int expectedPosition(boolean moveResult) {
+        return moveResult ? 1 : 0;
+    }
+
+    private int expectedPosition(int randomNumber) {
+        return randomNumber >= 4 ? 1 : 0;
+    }
+
+
 }
