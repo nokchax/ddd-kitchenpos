@@ -7,15 +7,14 @@ import java.util.stream.Collectors;
 public class Numbers {
     private List<Integer> numbers;
 
-    //boxed() -> primitive type을 reference type으로 박싱해서 stream을 생성함.
     Numbers(String[] numbers) {
         this.numbers = Arrays.stream(numbers)
-                .map(this::parseInt)
+                .map(this::parseStringNumber)
                 .collect(Collectors.toList());
     }
     
-    private Integer parseInt(String number) {
-        Integer parsedInt = Integer.parseInt(number);
+    private Integer parseStringNumber(String stringNumber) {
+        Integer parsedInt = Integer.parseInt(stringNumber);
         
         if(parsedInt < 0)
             throw new RuntimeException();

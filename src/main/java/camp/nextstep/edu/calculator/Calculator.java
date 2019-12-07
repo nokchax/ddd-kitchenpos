@@ -8,8 +8,8 @@ public class Calculator {
         if(isEmpty(input))
             return 0;
 
-        return Interpreter.interpret(input)
-                .calculate();
+        return new Numbers(Interpreter.interpret(input))
+                .sum();
     }
 
     private boolean isEmpty(String input) {
