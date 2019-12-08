@@ -14,7 +14,7 @@ public class DefaultTokenizer implements Tokenizer {
 
     private static final Pattern PATTERN = Pattern.compile("//(.)\n(.*)");
 
-    private final Tokenizer defaultTokenizer = new BasicTokenizer();
+    private final Tokenizer basicTokenizer = new BasicTokenizer();
 
     @Override
     public List<String> split(String text) {
@@ -29,7 +29,7 @@ public class DefaultTokenizer implements Tokenizer {
                     .collect(toList());
         }
 
-        return defaultTokenizer.split(text);
+        return basicTokenizer.split(text);
     }
 
 }

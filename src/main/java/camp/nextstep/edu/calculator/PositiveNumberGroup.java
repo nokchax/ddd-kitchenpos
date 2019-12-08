@@ -19,7 +19,7 @@ public class PositiveNumberGroup {
 
     private void add(Integer number) {
         validate(number);
-        this.positiveNumbers.add(number);
+        positiveNumbers.add(number);
     }
 
     private void validate(Integer number) {
