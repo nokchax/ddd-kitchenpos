@@ -32,10 +32,7 @@ public class CarTests {
         final int beforePosition = 0;
         final Car car = new Car("Car", beforePosition);
 
-        final RandomMovingStrategy mockMovingStrategy = Mockito.mock(RandomMovingStrategy.class);
-        Mockito.when(mockMovingStrategy.movable()).thenReturn(true);
-
-        car.move(mockMovingStrategy);
+        car.move(getMockMovingStrategy(true));
 
         assertFalse(car.isInPosition(beforePosition));
     }
@@ -46,11 +43,15 @@ public class CarTests {
         final int beforePosition = 0;
         final Car car = new Car("Car", beforePosition);
 
-        final RandomMovingStrategy mockMovingStrategy = Mockito.mock(RandomMovingStrategy.class);
-        Mockito.when(mockMovingStrategy.movable()).thenReturn(false);
-
-        car.move(mockMovingStrategy);
+        car.move(getMockMovingStrategy(false));
 
         assertTrue(car.isInPosition(beforePosition));
+    }
+
+    private RandomMovingStrategy getMockMovingStrategy(boolean movable) {
+        final RandomMovingStrategy mockMovingStrategy = Mockito.mock(RandomMovingStrategy.class);
+        Mockito.when(mockMovingStrategy.movable()).thenReturn(movable);
+
+        return mockMovingStrategy;
     }
 }

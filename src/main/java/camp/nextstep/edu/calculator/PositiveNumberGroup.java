@@ -19,7 +19,7 @@ public class PositiveNumberGroup {
 
     private void add(Integer number) {
         validate(number);
-        this.positiveNumbers.add(number);
+        positiveNumbers.add(number);
     }
 
     private void validate(Integer number) {
@@ -29,6 +29,7 @@ public class PositiveNumberGroup {
     }
 
     public int sumAll() {
-        return positiveNumbers.stream().reduce(0, Integer::sum);
+        return positiveNumbers.stream()
+                .reduce(0, Integer::sum);
     }
 }
