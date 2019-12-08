@@ -13,8 +13,8 @@ public final class DelimiterImpl implements Delimiter {
 
     private static final Pattern EXTRACT_SEPARATOR_PATTERN = compile("//(.)\\n(.*)");
     private static final String SEPARATOR_RegExr = "[:,]";
-    private static final Integer FIRST_GROUP = 1;
-    private static final Integer SECOND_GROUP = 2;
+    private static final Integer EXTRACT_CUSTOM_DELIMITER_INDEX = 1;
+    private static final Integer EXTRACT_TOKENS_INDEX = 2;
 
     @Override
     public List<String> getListBySeparatorPattern(final String line) {
@@ -27,8 +27,8 @@ public final class DelimiterImpl implements Delimiter {
             return getListByDefaultSeparatorPattern(line);
         }
 
-        final String customDelimiter = matcher.group(FIRST_GROUP);
-        final String[] tokens = matcher.group(SECOND_GROUP).split(customDelimiter);
+        final String customDelimiter = matcher.group(EXTRACT_CUSTOM_DELIMITER_INDEX);
+        final String[] tokens = matcher.group(EXTRACT_TOKENS_INDEX).split(customDelimiter);
 
         // custom 과 default 가 섞여있는 문자열.
         for(String token : tokens) {
