@@ -1,6 +1,6 @@
 package camp.nextstep.edu.calculator;
 
-import java.util.List;
+import java.util.Iterator;
 
 public class Calculator {
 
@@ -27,10 +27,12 @@ public class Calculator {
             return ZERO;
         }
 
-        List<String>tokens = delimiter.getListBySeparatorPattern(line);
+        final TokenList tokenList = delimiter.getListBySeparatorPattern(line);
 
-        for(String token : tokens) {
-            sum += validator.calculateIfPossibleOrElseThrow(token);
+        final Iterator<String> iterator = tokenList.iterator();
+
+        while(iterator.hasNext()){
+            sum += validator.calculateIfPossibleOrElseThrow(iterator.next());
         }
 
         return sum;

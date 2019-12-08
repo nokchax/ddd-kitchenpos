@@ -45,7 +45,7 @@ class CalculatorTest {
 
     @ParameterizedTest
     @DisplayName("공백 및 구분자로 구성된 문자열의 합을 계산한다.")
-    @ValueSource(strings = {"", ",,,", ",", ":,", ",,,"})
+    @ValueSource(strings = {",,,", ":,", ",:,", ":", ","})
     void _addResultZeroTest(String line) {
 
         assertThat(calculator.add(line))
