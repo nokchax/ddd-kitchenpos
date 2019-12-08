@@ -2,28 +2,35 @@ package camp.nextstep.edu.calculator;
 
 import java.util.List;
 
-/**
- * Created by pasudo123 on 2019-12-04
- * Email: oraedoa@gmail.com
- **/
 public class Calculator {
 
-    private final Validator validator;
-    private final Delimiter delimiter;
+    private static final Integer ZERO = 0;
 
-    public Calculator() {
-        this.validator = new ValidatorImpl();
-        this.delimiter = new DelimiterImpl();
+    private Validator validator = new ValidatorImpl();
+    private Delimiter delimiter = new DelimiterImpl();
+
+    Calculator() { }
+
+    public void updateValidator(final Validator validator) {
+        this.validator = validator;
+    }
+
+    public void updateDelimiter(final Delimiter delimiter){
+        this.delimiter = delimiter;
     }
 
     int add(final String line) {
 
         int sum = 0;
 
+        if(validator.isZeroIfNullOrEmpty(line)) {
+            return ZERO;
+        }
+
         List<String>tokens = delimiter.splitStringReturnList(line);
 
         for(String token : tokens) {
-            sum += validator.possibleCalculateOrElseThrow(token);
+            sum += validator.calculateIfPossibleOrElseThrow(token);
         }
 
         return sum;
