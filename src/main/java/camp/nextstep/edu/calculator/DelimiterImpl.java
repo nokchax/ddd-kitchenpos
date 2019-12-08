@@ -1,7 +1,5 @@
 package camp.nextstep.edu.calculator;
 
-import org.apache.logging.log4j.util.Strings;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,10 +8,12 @@ import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.compile;
 
-public class DelimiterImpl implements Delimiter {
+public final class DelimiterImpl implements Delimiter {
 
     private static final Pattern EXTRACT_SEPARATOR_PATTERN = compile("//(.)\\n(.*)");
     private static final String SEPARATOR_REGEX = "[:,]";
+    private static final Integer FIRST_GROUP = 1;
+    private static final Integer SECOND_GROUP = 2;
 
     @Override
     public List<String> splitStringReturnList(final String line) {
@@ -37,9 +37,9 @@ public class DelimiterImpl implements Delimiter {
             return useBasicSplitReturnArray(line);
         }
 
-        String customDelimiter = matcher.group(1);
+        final String customDelimiter = matcher.group(FIRST_GROUP);
 
-        return matcher.group(2)
+        return matcher.group(SECOND_GROUP)
                 .split(customDelimiter);
     }
 
