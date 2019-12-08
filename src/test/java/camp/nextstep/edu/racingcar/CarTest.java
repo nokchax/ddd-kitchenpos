@@ -1,14 +1,19 @@
 package camp.nextstep.edu.racingcar;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import java.util.Random;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * Created by pasudo123 on 2019-12-02
@@ -52,47 +57,21 @@ class CarTest {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    @DisplayName("자동차는 항상 true 로 이동한다.")
-    void _carMoveTest() {
+    @ParameterizedTest
+    @DisplayName("자동차는 주어진 movable 값에 따라서 위치를 움직인다.")
+    @MethodSource("carMovableProvider")
+    void _carMoveTest(boolean movable, int position) {
 
-        Car car = new Car("ABC", 5);
+        final Car car = new Car("Par");
+        car.move(() -> movable);
 
-        // 1 ~ 5
-        for(int i = 1; i <= 5; i++) {
-            car.move(new MockMovingTrueStrategy());
-        }
-
-        assertThat(car.isInPosition(5 * 2)).isTrue();
+        assertThat(car.isInPosition(position));
     }
 
-    @Test
-    @DisplayName("자동차는 항상 false 로 이동하지 않는다.")
-    void _carMoveFailTest() {
-
-        Car car = new Car("ABC", 5);
-
-        for(int i = 1; i <= 5; i++) {
-            car.move(new MockMovingFailStrategy());
-        }
-
-        assertThat(car.isInPosition(5)).isTrue();
-    }
-
-    /** true **/
-    // src 에서 interface 선언, parameter 변경, mock 객체를 통한 테스트
-    class MockMovingTrueStrategy implements MovingStrategy{
-        @Override
-        public boolean movable() {
-            return true;
-        }
-    }
-
-    /** false **/
-    class MockMovingFailStrategy implements MovingStrategy{
-        @Override
-        public boolean movable() {
-            return false;
-        }
+    static Stream<Arguments> carMovableProvider() {
+        return Stream.of(
+                Arguments.of(true, 1),
+                Arguments.of(false, 0)
+        );
     }
 }
