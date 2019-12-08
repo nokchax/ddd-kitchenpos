@@ -3,9 +3,11 @@ package camp.nextstep.edu.calculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -19,6 +21,16 @@ class CalculatorTest {
     @BeforeEach
     void init() {
         this.calculator = new Calculator();
+    }
+
+    @ParameterizedTest
+    @DisplayName("null 값 또는 공백을 계산한다.")
+    @NullAndEmptySource
+    void _nullAndEmptyAddTest(String line) {
+
+        assertThat(calculator.add(line))
+                .as("null 또는 공백이 들어왔고, 0을 리턴한다.")
+                .isEqualTo(0);
     }
 
     @ParameterizedTest

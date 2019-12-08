@@ -1,40 +1,43 @@
 package camp.nextstep.edu.calculator;
 
-public class ValidatorImpl implements Validator{
+import org.springframework.util.StringUtils;
+
+public final class ValidatorImpl implements Validator {
+
+    private static final Integer ZERO = 0;
 
     @Override
-    public int possibleCalculateOrElseThrow(final String line) {
-
-        if(line.isEmpty()) {
-            return 0;
-        }
-
-        this.numberOrElseThrow(line);
-        this.positiveOrElseThrow(line);
-
-        return Integer.parseInt(line);
+    public boolean isZeroIfNullOrEmpty(String line) {
+        return StringUtils.isEmpty(line);
     }
 
-    private void numberOrElseThrow(final String line){
+    @Override
+    public int calculateIfPossibleOrElseThrow(final String line) {
 
-        // 숫자가 아닌 경우
+        this.throwIfNegativeOrNoneNumber(line);
+
+        return getIntegerOnString(line);
+    }
+
+
+    private void throwIfNegativeOrNoneNumber(final String line) {
+
         try {
-            Integer.parseInt(line);
+            // 숫자 또는 음수가 아닌 경우 : 에러발생.
+            // RuntimeException 이 자동으로 발생하기 때문에 무방하긴 함.
+            if (getIntegerOnString(line) < ZERO) {
+                this.executeRuntimeException(line);
+            }
         } catch (Exception e) {
             this.executeRuntimeException(line);
         }
     }
 
-    private void positiveOrElseThrow(final String line) {
-
-        // 음수인 경우
-        if(Integer.parseInt(line) < 0) {
-            this.executeRuntimeException(line);
-        }
+    private int getIntegerOnString(final String line) {
+        return Integer.parseInt(line);
     }
 
-
-    private void executeRuntimeException(final String line){
-        throw new RuntimeException(String.format("\"%d\" 값이 들어왔기 때문에 덧셈을 수행하지 못합니다.", line));
+    private void executeRuntimeException(final String line) {
+        throw new RuntimeException(String.format("\"%s\" 값이 들어왔기 때문에 덧셈을 수행하지 못합니다.", line));
     }
 }

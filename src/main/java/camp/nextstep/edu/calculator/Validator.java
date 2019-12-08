@@ -2,6 +2,8 @@ package camp.nextstep.edu.calculator;
 
 public interface Validator {
 
-    int possibleCalculateOrElseThrow(String line);
+    boolean isZeroIfNullOrEmpty(String line);
+
+    int calculateIfPossibleOrElseThrow(String line);
 
 }

@@ -1,5 +1,6 @@
 package camp.nextstep.edu.calculator;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Calculator {
@@ -9,7 +10,7 @@ public class Calculator {
     private Validator validator = new ValidatorImpl();
     private Delimiter delimiter = new DelimiterImpl();
 
-    Calculator() { }
+    public Calculator() { }
 
     public void updateValidator(final Validator validator) {
         this.validator = validator;
@@ -27,7 +28,7 @@ public class Calculator {
             return ZERO;
         }
 
-        List<String>tokens = delimiter.splitStringReturnList(line);
+        List<String>tokens = delimiter.getListBySeparatorPattern(line);
 
         for(String token : tokens) {
             sum += validator.calculateIfPossibleOrElseThrow(token);

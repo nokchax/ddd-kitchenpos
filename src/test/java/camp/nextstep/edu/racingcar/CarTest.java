@@ -66,15 +66,6 @@ class CarTest {
         assertThat(car.isInPosition(5 * 2)).isTrue();
     }
 
-    /** true **/
-    // src 에서 interface 선언, parameter 변경, mock 객체를 통한 테스트
-    class MockMovingTrueStrategy implements MovingStrategy{
-        @Override
-        public boolean movable() {
-            return true;
-        }
-    }
-
     @Test
     @DisplayName("자동차는 항상 false 로 이동하지 않는다.")
     void _carMoveFailTest() {
@@ -86,6 +77,15 @@ class CarTest {
         }
 
         assertThat(car.isInPosition(5)).isTrue();
+    }
+
+    /** true **/
+    // src 에서 interface 선언, parameter 변경, mock 객체를 통한 테스트
+    class MockMovingTrueStrategy implements MovingStrategy{
+        @Override
+        public boolean movable() {
+            return true;
+        }
     }
 
     /** false **/
